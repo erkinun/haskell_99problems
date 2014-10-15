@@ -2,6 +2,7 @@ module Ten
 ( myLast
 , myButLast
 , elementAt
+, myLength
 ) where
 
 myLast :: [a] -> a
@@ -18,3 +19,11 @@ elementAt :: [a] -> Int -> a
 elementAt [] _ = error "can not work on empty list"
 elementAt (x:xs) 1 = x
 elementAt (x:xs) n = elementAt xs (n-1)
+
+myLength :: [a] -> Int
+myLength [] = 0
+myLength (x:xs) = innerLength xs 1
+
+innerLength :: [a] -> Int -> Int
+innerLength [] n = n
+innerLength (x:xs) n = innerLength xs (n+1)
