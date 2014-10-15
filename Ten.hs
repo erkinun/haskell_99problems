@@ -1,3 +1,6 @@
+module Ten 
+( myLast
+) where
 
 myLast :: [a] -> a
 myLast [] = error "can not work on empty list"
