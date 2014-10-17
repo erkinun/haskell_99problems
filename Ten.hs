@@ -27,3 +27,7 @@ myLength (x:xs) = innerLength xs 1
 innerLength :: [a] -> Int -> Int
 innerLength [] n = n
 innerLength (x:xs) n = innerLength xs (n+1)
+
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse (x:xs) = myReverse xs ++ [x]
