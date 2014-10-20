@@ -3,6 +3,8 @@ module Ten
 , myButLast
 , elementAt
 , myLength
+, myReverse
+, isPalindrome
 ) where
 
 myLast :: [a] -> a
@@ -31,3 +33,9 @@ innerLength (x:xs) n = innerLength xs (n+1)
 myReverse :: [a] -> [a]
 myReverse [] = []
 myReverse (x:xs) = myReverse xs ++ [x]
+
+--isPalindrome :: [a] -> Bool
+isPalindrome [] = True
+isPalindrome [x] = True
+isPalindrome xs | (head xs) == (last xs) = True && isPalindrome( init $ tail xs )
+                | otherwise = False 
