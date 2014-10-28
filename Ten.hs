@@ -45,3 +45,9 @@ data NestedList a = Elem a | List [NestedList a]
 flatten (Elem a) = [a]
 flatten (List []) = []
 flatten (List (a:as)) = (flatten a) ++ flatten (List as)
+
+compress [] = [] 
+compress (a:b:xs)
+    | a == b = compress (b:xs)
+    | otherwise = a : compress (b:xs)                       
+compress (x:xs) = x : compress xs
