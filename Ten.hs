@@ -39,3 +39,9 @@ isPalindrome [] = True
 isPalindrome [x] = True
 isPalindrome xs | (head xs) == (last xs) = True && isPalindrome( init $ tail xs )
                 | otherwise = False 
+
+data NestedList a = Elem a | List [NestedList a]
+
+flatten (Elem a) = [a]
+flatten (List []) = []
+flatten (List (a:as)) = (flatten a) ++ flatten (List as)
