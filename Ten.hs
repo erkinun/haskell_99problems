@@ -81,3 +81,11 @@ encodeModInner [] = []
 encodeModInner (x:xs)
     | fst x == 1 = Single (snd x) : encodeModInner xs
     | otherwise = Multiple (fst x) (snd x) : encodeModInner xs
+
+decodeModified :: [RunLength a] -> [a]
+decodeModified [] = []
+decodeModified (x:xs) = (run2List x) ++ decodeModified xs
+
+run2List :: RunLength a -> [a]
+run2List (Single a) = [a]
+run2List (Multiple len a) = replicate len a
