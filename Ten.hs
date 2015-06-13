@@ -70,3 +70,14 @@ encode xs = (encodeInner . pack) xs
 encodeInner :: [[a]] -> [(Int,a)]
 encodeInner [] = []
 encodeInner (x:xs) = ((length x), (head x)) : encodeInner xs
+
+data RunLength a = Multiple Int a | Single a deriving (Show)
+
+encodeModified [] = []
+encodeModified xs = (encodeModInner.encode) xs
+
+encodeModInner :: Eq a => [(Int, a)] -> [RunLength a]
+encodeModInner [] = []
+encodeModInner (x:xs)
+    | fst x == 1 = Single (snd x) : encodeModInner xs
+    | otherwise = Multiple (fst x) (snd x) : encodeModInner xs
