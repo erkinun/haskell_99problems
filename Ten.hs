@@ -51,3 +51,13 @@ compress (a:b:xs)
     | a == b = compress (b:xs)
     | otherwise = a : compress (b:xs)                       
 compress (x:xs) = x : compress xs
+
+pack [] = [] 
+pack xs = packInner xs []
+
+packInner :: Eq a => [a] -> [[a]] -> [[a]]
+packInner (x:xs) [] = packInner xs [[x]]
+packInner (x:xs) xss
+          | elem x (last xss) = packInner xs $  (init xss) ++ [(x : (last xss))]
+          | otherwise = packInner xs $ xss ++ [[x]]
+packInner [] xss = xss 
