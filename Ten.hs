@@ -52,6 +52,7 @@ compress (a:b:xs)
     | otherwise = a : compress (b:xs)                       
 compress (x:xs) = x : compress xs
 
+pack :: Eq a => [a] -> [[a]]
 pack [] = [] 
 pack xs = packInner xs []
 
@@ -61,3 +62,11 @@ packInner (x:xs) xss
           | elem x (last xss) = packInner xs $  (init xss) ++ [(x : (last xss))]
           | otherwise = packInner xs $ xss ++ [[x]]
 packInner [] xss = xss 
+
+encode :: Eq a => [a] -> [(Int, a)]
+encode [] = []
+encode xs = (encodeInner . pack) xs
+
+encodeInner :: [[a]] -> [(Int,a)]
+encodeInner [] = []
+encodeInner (x:xs) = ((length x), (head x)) : encodeInner xs
