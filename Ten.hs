@@ -82,6 +82,7 @@ encodeModInner (x:xs)
     | fst x == 1 = Single (snd x) : encodeModInner xs
     | otherwise = Multiple (fst x) (snd x) : encodeModInner xs
 
+--problem 12
 decodeModified :: [RunLength a] -> [a]
 decodeModified [] = []
 decodeModified (x:xs) = (run2List x) ++ decodeModified xs
@@ -89,3 +90,19 @@ decodeModified (x:xs) = (run2List x) ++ decodeModified xs
 run2List :: RunLength a -> [a]
 run2List (Single a) = [a]
 run2List (Multiple len a) = replicate len a
+
+--problem 13 encode direct
+encodeDirect :: Eq a => [a] -> [RunLength a]
+encodeDirect [] = []
+encodeDirect xs = list2Run (reverse xs) []
+
+list2Run :: Eq a => [a] -> [RunLength a] -> [RunLength a]
+list2Run [] rs = rs 
+list2Run (x:xs) [] = list2Run xs [Single x]
+list2Run (x:xs) (Single y:rs) 
+    | x == y = list2Run xs ((Multiple 2 x) : rs)
+    | otherwise = list2Run xs (Single x : (Single y : rs))
+list2Run (x:xs) (Multiple i y:rs) 
+    | x == y = list2Run xs (Multiple (i+1) x : rs)
+    | otherwise = list2Run xs (Single x : (Multiple i y : rs))
+
